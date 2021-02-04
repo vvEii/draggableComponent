@@ -84,7 +84,6 @@
         <div id="circle-three" class="circle">
         </div>
       </div>
-
       <div id="item">
       </div>
     </div>
@@ -97,16 +96,6 @@
       let container = document.querySelector("#container");
       let circleContainer = document.querySelector('#circle-container');
 
-      $("#item").click(() => {
-        console.log($(".circle").css('display'));
-        if ($('.circle').css('display') === 'none') {
-          $('.circle').show()
-        } else {
-          $('.circle').hide()
-        }
-      })
-
-
       let active = false;
       let currentX;
       let currentY;
@@ -114,6 +103,21 @@
       let initialY;
       let xOffset = 0;
       let yOffset = 0;
+      let clickEvent = false;
+
+      let mouseupTime = 0;
+      let mousedownTime = 0;
+
+      $("#item").click(() => {
+        if (clickEvent) {
+          clickEvent = false;
+          if ($('.circle').css('display') === 'none') {
+            $('.circle').show()
+          } else {
+            $('.circle').hide()
+          }
+        }
+      })
 
       container.addEventListener("touchstart", dragStart, false);
       container.addEventListener("touchend", dragEnd, false);
@@ -124,6 +128,7 @@
       container.addEventListener("mousemove", drag, false);
 
       function dragStart(e) {
+        mousedownTime = new Date().getTime();
         if (e.type === "touchstart") {
           initialX = e.touches[0].clientX - xOffset;
           initialY = e.touches[0].clientY - yOffset;
@@ -138,6 +143,10 @@
       }
 
       function dragEnd(e) {
+        mouseupTime = new Date().getTime();
+        if (mouseupTime - mousedownTime < 200) {
+          clickEvent = true;
+        }
         initialX = currentX;
         initialY = currentY;
         setTranslate(currentX + 200, currentY - 190, circleContainer);
