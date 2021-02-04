@@ -111,6 +111,7 @@
       $("#item").click(() => {
         if (clickEvent) {
           clickEvent = false;
+          $('#container').css('background-color', '#333')
           if ($('.circle').css('display') === 'none') {
             $('.circle').show()
           } else {
