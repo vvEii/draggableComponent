@@ -21,6 +21,23 @@
       touch-action: none;
     }
 
+    #heading {
+      width: 100%;
+      height: 5vh;
+      background-color: darkgray;
+      border-radius: 7px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 30px;
+      margin-bottom: 10px;
+      color: rgb(245, 230, 99);
+    }
+
+    #heading:hover {
+      background-color: rgb(78, 76, 76);
+      box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.778), 0 8px 24px 0 rgba(0, 0, 0, 0.545);
+    }
+
     #item {
       width: 100px;
       height: 100px;
@@ -87,7 +104,9 @@
 <body>
 
   <div id="outerContainer">
+    <div id="heading">Show</div>
     <div id="container">
+
       <div id="circle-container">
         <div id="circle-one" class="circle">
         </div>
@@ -109,6 +128,9 @@
       let dragItem = document.querySelector("#item");
       let container = document.querySelector("#container");
       let circleContainer = document.querySelector('#circle-container');
+      let circleOne = document.querySelector('#circle-one');
+      let circleTwo = document.querySelector("#circle-two");
+      let circleThree = document.querySelector("#circle-three");
 
       let active = false;
       let currentX;
@@ -132,6 +154,11 @@
             $('.circle').hide()
           }
         }
+      })
+
+      $("#heading").click(() => {
+        $('#item').show();
+        $('#bottom').css({ height: "5vh" })
       })
 
       $('#circle-one').click(() => {
@@ -194,10 +221,6 @@
         initialY = currentY;
         setTranslate(currentX + 200, currentY - 190, circleContainer);
         active = false;
-        console.log();
-        if (circleContainer.getBoundingClientRect().y >= 500) {
-
-        }
       }
 
       function drag(e) {
@@ -215,6 +238,7 @@
 
           xOffset = currentX;
           yOffset = currentY;
+
 
           setTranslate(currentX, currentY, dragItem);
         }
